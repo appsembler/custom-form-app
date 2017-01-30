@@ -14,6 +14,7 @@ class ExtraInfo(models.Model):
 
     phone = models.CharField(
         verbose_name="Phone",
+        blank=True,
         max_length=100
     )
 
