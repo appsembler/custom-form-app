@@ -23,9 +23,9 @@ class InterSystemsUserProfileView(APIView):
 
     **Example Requests**:
 
-        GET /api/user/v1/intersystemsprofile/{username}
+        GET /api/user/v1/cmcuserprofile/{username}
 
-        PATCH /api/user/v1/intersystemsprofile/{username}/{"key":"value"} "application/merge-patch+json"
+        PATCH /api/user/v1/cmcuserprofile/{username}/{"key":"value"} "application/merge-patch+json"
 
     **Response Values for GET**
 
@@ -38,6 +38,8 @@ class InterSystemsUserProfileView(APIView):
         * organization: The Organization associated with the user
 
         * job_title: The Job Title associated with the user
+
+        * cmc_username: The Coordinate My Care Username associated with the user.
 
 
         For all text fields, clients rendering the values should take care
@@ -78,7 +80,7 @@ class InterSystemsUserProfileView(APIView):
 
 	def get(self, request, username):
 	    """
-	    GET /api/user/v1/intersystemsprofile/{username}
+	    GET /api/user/v1/cmcuserprofile/{username}
 	    """
 	    try:
 	        account_settings = get_account_settings(request.user, username, view=request.QUERY_PARAMS.get('view'))
@@ -89,7 +91,7 @@ class InterSystemsUserProfileView(APIView):
 
 	def patch(self, request, username):
 	    """
-	    PATCH /api/user/v1/intersystemsprofile/{username}
+	    PATCH /api/user/v1/cmcuserprofile/{username}
 
 	    Note that this implementation is the "merge patch" implementation proposed in
 	    https://tools.ietf.org/html/rfc7396. The content_type must be "application/merge-patch+json" or

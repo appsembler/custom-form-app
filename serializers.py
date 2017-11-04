@@ -10,6 +10,6 @@ class InterSystemsUserProfileSerializer(serializers.HyperlinkedModelSerializer, 
     """
     class Meta:
         model = InterSystemsUserProfile
-        fields = ("organization", "job_title", )
+        fields = ("organization", "job_title", "cmc_username")
         # read_only_fields = ()
         # explicit_read_only_fields = ()
