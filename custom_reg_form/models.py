@@ -5,7 +5,7 @@ from django.db import models
 USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
-class InterSystemsUserProfile(models.Model):
+class CMCUserProfile(models.Model):
     """
     User profile fields specific to InterSystems
     """

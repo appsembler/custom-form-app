@@ -1,13 +1,13 @@
 from django.forms import ModelForm, CharField
 
-from .models import InterSystemsUserProfile
+from .models import CMCUserProfile
 
 
 class CMCUserProfileExtensionForm(ModelForm):
 
 
     class Meta(object):
-        model = InterSystemsUserProfile
+        model = CMCUserProfile
         fields = ('cmc_username', 'job_title', 'organization')
 
     cmc_username = CharField(label='CMC Username')

@@ -14,7 +14,7 @@ from openedx.core.lib.api.parsers import MergePatchParser
 from .api import update_account_settings, get_account_settings
 
 
-class InterSystemsUserProfileView(APIView):
+class CMCUserProfileView(APIView):
 	"""
 	**Use Cases**
 

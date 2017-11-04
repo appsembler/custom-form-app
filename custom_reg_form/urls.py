@@ -9,7 +9,7 @@ USERNAME_PATTERN = r'(?P<username>[\w.+-]+)'
 urlpatterns = patterns(
     'custom_reg_form.views',
     url(r'^/{}$'.format(USERNAME_PATTERN),
-    	views.InterSystemsUserProfileView.as_view(), 
+    	views.CMCUserProfile.as_view(), 
     	name='cmcuserprofile_api'
     ),
 )

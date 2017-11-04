@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import InterSystemsUserProfile
+from .models import CMCUserProfile
 
-admin.site.register(InterSystemsUserProfile)
+admin.site.register(CMCUserProfile)

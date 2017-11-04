@@ -4,12 +4,12 @@ from openedx.core.djangoapps.user_api.serializers import ReadOnlyFieldsSerialize
 from .models import InterSystemsUserProfile
 
 
-class InterSystemsUserProfileSerializer(serializers.HyperlinkedModelSerializer, ReadOnlyFieldsSerializerMixin):
+class CMCUserProfileSerializer(serializers.HyperlinkedModelSerializer, ReadOnlyFieldsSerializerMixin):
     """
     Class that serializes the portion of User model needed for account information.
     """
     class Meta:
-        model = InterSystemsUserProfile
+        model = CMCUserProfile
         fields = ("organization", "job_title", "cmc_username")
         # read_only_fields = ()
         # explicit_read_only_fields = ()
