@@ -1,4 +1,3 @@
-from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,8 +14,8 @@ from .api import update_account_settings, get_account_settings
 
 
 class CMCUserProfileView(APIView):
-	"""
-	**Use Cases**
+    """
+    **Use Cases**
 
         Get or update a user's InterSystems User Profile information. Updates are supported
         only through merge patch.
@@ -73,46 +72,45 @@ class CMCUserProfileView(APIView):
 
         If the update is successful, a 204 status is returned with no
         additional content.
-	"""
-	authentication_classes = (OAuth2AuthenticationAllowInactiveUser, SessionAuthenticationAllowInactiveUser)
-	permission_classes = (permissions.IsAuthenticated,)
-	parser_classes = (MergePatchParser,)
+    """
+    authentication_classes = (OAuth2AuthenticationAllowInactiveUser, SessionAuthenticationAllowInactiveUser)
+    permission_classes = (permissions.IsAuthenticated,)
+    parser_classes = (MergePatchParser,)
 
-	def get(self, request, username):
-	    """
-	    GET /api/user/v1/cmcuserprofile/{username}
-	    """
-	    try:
-	        account_settings = get_account_settings(request.user, username, view=request.QUERY_PARAMS.get('view'))
-	    except UserNotFound:
-	        return Response(status=status.HTTP_403_FORBIDDEN if request.user.is_staff else status.HTTP_404_NOT_FOUND)
+    def get(self, request, username):
+        """
+        GET /api/user/v1/cmcuserprofile/{username}
+        """
+        try:
+            account_settings = get_account_settings(request.user, username, view=request.query_params.get('view'))
+        except UserNotFound:
+            return Response(status=status.HTTP_403_FORBIDDEN if request.user.is_staff else status.HTTP_404_NOT_FOUND)
 
-	    return Response(account_settings)
+        return Response(account_settings)
 
-	def patch(self, request, username):
-	    """
-	    PATCH /api/user/v1/cmcuserprofile/{username}
+    def patch(self, request, username):
+        """
+        PATCH /api/user/v1/cmcuserprofile/{username}
 
-	    Note that this implementation is the "merge patch" implementation proposed in
-	    https://tools.ietf.org/html/rfc7396. The content_type must be "application/merge-patch+json" or
-	    else an error response with status code 415 will be returned.
-	    """
-	    try:
-	        with transaction.commit_on_success():
-	            update_account_settings(request.user, request.DATA, username)
-	    except UserNotAuthorized:
-	        return Response(status=status.HTTP_403_FORBIDDEN if request.user.is_staff else status.HTTP_404_NOT_FOUND)
-	    except UserNotFound:
-	        return Response(status=status.HTTP_404_NOT_FOUND)
-	    except AccountValidationError as err:
-	        return Response({"field_errors": err.field_errors}, status=status.HTTP_400_BAD_REQUEST)
-	    except AccountUpdateError as err:
-	        return Response(
-	            {
-	                "developer_message": err.developer_message,
-	                "user_message": err.user_message
-	            },
-	            status=status.HTTP_400_BAD_REQUEST
-	        )
+        Note that this implementation is the "merge patch" implementation proposed in
+        https://tools.ietf.org/html/rfc7396. The content_type must be "application/merge-patch+json" or
+        else an error response with status code 415 will be returned.
+        """
+        try:
+            update_account_settings(request.user, request.data, username)
+        except UserNotAuthorized:
+            return Response(status=status.HTTP_403_FORBIDDEN if request.user.is_staff else status.HTTP_404_NOT_FOUND)
+        except UserNotFound:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except AccountValidationError as err:
+            return Response({"field_errors": err.field_errors}, status=status.HTTP_400_BAD_REQUEST)
+        except AccountUpdateError as err:
+            return Response(
+                {
+                    "developer_message": err.developer_message,
+                    "user_message": err.user_message
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-	    return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)

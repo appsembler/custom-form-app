@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from openedx.core.djangoapps.user_api.serializers import ReadOnlyFieldsSerializerMixin
 
-from .models import InterSystemsUserProfile
+from .models import CMCUserProfile
 
 
 class CMCUserProfileSerializer(serializers.HyperlinkedModelSerializer, ReadOnlyFieldsSerializerMixin):

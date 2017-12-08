@@ -1,15 +1,22 @@
 import logging
 
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.translation import ugettext_lazy as _
 
 from student_account.fields import AccountSettingsExtensionField
 
-from .models import CMCUserProfile
 
 logger = logging.getLogger(__name__)
 
+
+REG_FORM_FIELD_OVERRIDES = {
+    'name': {
+        'label': "Full Name",
+        'placeholder': ""
+    },
+    'terms_of_service': {
+        'label': "I have read and agree to the <a href=''>Terms and Conditions</a> and <a href=''>Privacy Policy</a>"
+    }
+}
 
 
 class CMCBaseExtensionField(AccountSettingsExtensionField):
@@ -26,7 +33,7 @@ class CMCBaseExtensionField(AccountSettingsExtensionField):
             'title': self.title,
             'helpMessage': self.helpMessage,
             'valueAttribute': self.valueAttribute,
-            'options': self.options,
+            'options': getattr(self, 'options', None),
             'persistChanges': self.persistChanges
         }
 
@@ -35,10 +42,10 @@ class CMCOrganizationExtensionField(CMCBaseExtensionField):
 
     field_id = 'organization'
     js_model = 'js/student_account/models/user_account_model'
-    js_field_view_class = 'FieldViews.TextFieldView'
+    js_field_view_class = 'AccountSettingsFieldViews.TextFieldView'
     api_url = None
     title = 'Organisation'
-    helpMessage = 'The organisation through which you provide care.'
+    helpMessage = 'The name of your organisation'
     valueAttribute = 'organization'
     persistChanges = True
 
@@ -47,10 +54,10 @@ class CMCUsernameExtensionField(CMCBaseExtensionField):
 
     field_id = 'cmc_username'
     js_model = 'js/student_account/models/user_account_model'
-    js_field_view_class = 'FieldViews.TextFieldView'
+    js_field_view_class = 'AccountSettingsFieldViews.TextFieldView'
     api_url = None
     title = 'CMC Username'
-    helpMessage = 'Your Coordinate My Care username (if known)'
+    helpMessage = 'Your CMC username (if available)'
     valueAttribute = 'cmc_username'
     persistChanges = True
 
@@ -59,9 +66,9 @@ class CMCJobTitleExtensionField(CMCBaseExtensionField):
 
     field_id = 'job_title'
     js_model = 'js/student_account/models/user_account_model'
-    js_field_view_class = 'FieldViews.TextFieldView'
+    js_field_view_class = 'AccountSettingsFieldViews.TextFieldView'
     api_url = None
     title = 'Job Title'
-    helpMessage = 'Your Job Title at your CMC Organisation'
+    helpMessage = 'Your job title'
     valueAttribute = 'job_title'
     persistChanges = True
