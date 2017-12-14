@@ -8,13 +8,25 @@ from student_account.fields import AccountSettingsExtensionField
 logger = logging.getLogger(__name__)
 
 
+# overrideable properties are 
+# ['label', 'type', 'defaultValue', 'placeholder', 'instructions', 'required', 'restrictions', 'options', 'supplementalLink', 'supplementalText']
 REG_FORM_FIELD_OVERRIDES = {
     'name': {
         'label': "Full Name",
-        'placeholder': ""
+        'placeholder': "",
+        'instructions': ""
     },
     'terms_of_service': {
-        'label': "I have read and agree to the <a href=''>Terms and Conditions</a> and <a href=''>Privacy Policy</a>"
+        'label': "I have read and agree to the <a class='new-vp' href='/tos'>Terms and Conditions</a> and <a class='new-vp' href='/privacy'>Privacy Policy</a>",
+        'instructions': '',
+        'supplementalLink': '',
+        'supplementalText': ''
+    },
+    'username': {
+        'required': False,
+        'type': 'hidden',
+        'label': '',
+        'instructions': ''
     }
 }
 
