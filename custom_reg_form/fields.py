@@ -17,7 +17,7 @@ REG_FORM_FIELD_OVERRIDES = {
         'instructions': ""
     },
     'terms_of_service': {
-        'label': "I have read and agree to the <a class='new-vp' href='/tos'>Terms and Conditions</a> and <a class='new-vp' href='/privacy'>Privacy Policy</a>",
+        'label': "I have read and agree to the <a target='register_extra' href='/tos'>Terms and Conditions</a> and <a target='register_extra' class='new-vp' href='/privacy'>Privacy Policy</a>",
         'instructions': '',
         'supplementalLink': '',
         'supplementalText': ''
@@ -26,7 +26,7 @@ REG_FORM_FIELD_OVERRIDES = {
         'required': False,
         'type': 'hidden',
         'label': '',
-        'instructions': ''
+        'instructions': '',
     }
 }
 
