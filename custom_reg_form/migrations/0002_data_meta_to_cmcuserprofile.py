@@ -25,6 +25,9 @@ def move_job_title_and_organization_from_meta(apps, schema_editor):
     for up in UserProfile.objects.all():
         try:
             meta = json.loads(up.meta)
+        except ValueError:
+            meta = {}
+        try:
             org = meta.get('organization', None)
             job_title = meta.get('job-title', None)
             cmc_username = meta.get('cmc_username', None)            
