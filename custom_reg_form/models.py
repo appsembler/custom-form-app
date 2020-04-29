@@ -23,3 +23,9 @@ class ExtraInfo(models.Model):
         blank=True,
         max_length=100
     )
+
+    partnernumber = models.CharField(
+        verbose_name="Partner Number",
+        blank=True,
+        max_length=100
+    )
